@@ -18,6 +18,7 @@ const App = () => {
   const [docViewer, setDocViewer] = useState(null);
   const [annotManager, setAnnotManager] = useState(null);
   const [searchContainerOpen, setSearchContainerOpen] = useState(false);
+  const [annotations, setAnnotations] = useState([]);
 
   const Annotations = window.Annotations;
 
@@ -35,10 +36,20 @@ const App = () => {
 
     setDocViewer(docViewer);
 
+    const annotManager = docViewer.getAnnotationManager();
+
     docViewer.on('documentLoaded', () => {
       console.log('document loaded');
       docViewer.setToolMode(docViewer.getTool('AnnotationEdit'));
-      setAnnotManager(docViewer.getAnnotationManager());
+      setAnnotManager(annotManager);
+    });
+
+    annotManager.on('annotationChanged', () => {
+      setAnnotations(
+        annotManager
+          .getAnnotationsList()
+          .filter(annot => annot.Listable && !annot.isReply() && !annot.Hidden && !annot.isGrouped() && annot.ToolName !== window.Tools.ToolNames.CROP)
+      );
     });
   }, []);
 
@@ -102,6 +113,19 @@ const App = () => {
         <div className="flexbox-container" id="scroll-view" ref={scrollView}>
           <div id="viewer" ref={viewer}></div>
         </div>
+      </div>
+      <div id="notes-panel">
+        {
+          annotations.map((annot, idx) => {
+            const { Subject, DateModified } = annot;
+            return (
+              <div key={`annotation_${idx}`} className="note">
+                <p>{Subject}</p>
+                <p>{DateModified.toString()}</p>
+              </div>
+            );
+          })
+        }
       </div>
       <div className="flexbox-container">
         <SearchContainer

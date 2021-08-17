@@ -22,6 +22,10 @@
   color: white;
 }
 
+#notes-panel {
+  width: 10%;
+}
+
 #scroll-view {
   bottom: 0;
   /* leave room for 100px header */
@@ -39,6 +43,13 @@
 #main-column {
   flex-direction: row;
   flex: 3;
+  width: 90%;
+}
+
+.note {
+  border-style: solid;
+  border-color: #000000;
+  margin-bottom: 1em;
 }
 
 #tools {
