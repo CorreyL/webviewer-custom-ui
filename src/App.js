@@ -26,6 +26,9 @@ const App = () => {
   const [editBoxAnnotation, setEditBoxAnnotation] = useState(null);
   const [editBoxCurrentValue, setEditBoxCurrentValue] = useState(null);
 
+  const [sortedAnnotations, setSortedAnnotations] = useState([]);
+  const [selectedAnnotationIdx, setSelectedAnnotationIdx] = useState(null);
+
   const Annotations = window.Core.Annotations;
 
   // if using a class, equivalent of componentDidMount
