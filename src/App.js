@@ -70,6 +70,14 @@ const App = () => {
 
     setDocumentViewer(documentViewer);
 
+    const getAndSetSortedAnnotations = () => {
+      setSortedAnnotations(
+        documentViewer.getAnnotationManager()
+          .getAnnotationsList()
+          .sort(annotationAccessibilitySortingAlgorithm)
+      );
+    };
+
     documentViewer.addEventListener('documentLoaded', () => {
       console.log('document loaded');
       documentViewer.setToolMode(documentViewer.getTool(Core.Tools.ToolNames.EDIT));
