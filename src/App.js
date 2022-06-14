@@ -82,6 +82,7 @@ const App = () => {
       console.log('document loaded');
       documentViewer.setToolMode(documentViewer.getTool(Core.Tools.ToolNames.EDIT));
       setAnnotationManager(documentViewer.getAnnotationManager());
+      documentViewer.getAnnotationManager().promoteUserToAdmin();
     });
   }, []);
 
