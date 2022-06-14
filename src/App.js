@@ -100,6 +100,22 @@ const App = () => {
       });
   }, []);
 
+  useEffect(() => {
+    if (annotationManager) {
+      annotationManager.addEventListener('annotationSelected', (annot, action) => {
+        if (action === 'deselected') {
+          setSelectedAnnotationIdx(null);
+        }
+        if (action === 'selected') {
+          setSelectedAnnotationIdx(
+            sortedAnnotations
+              .findIndex(sortedAnnot => sortedAnnot.Id === annot[0].Id)
+          );
+        }
+      });
+    }
+  }, [annotationManager, sortedAnnotations]);
+
   const zoomOut = () => {
     documentViewer.zoomTo(documentViewer.getZoom() - 0.25);
   };
