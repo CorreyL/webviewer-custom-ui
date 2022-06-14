@@ -211,6 +211,12 @@ const App = () => {
           >
             <Search />
           </button>
+          <button onClick={previousAnnotation}>
+            Prev Annot
+          </button>
+          <button onClick={nextAnnotation}>
+            Next Annot
+          </button>
         </div>
         <Modal show={!!editBoxCurrentValue} style={{ background: 'rgba(0, 0, 0, 0.2)' }}>
           <ReactQuill
