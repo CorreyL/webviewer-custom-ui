@@ -175,6 +175,36 @@ const App = () => {
 
   const toolbarOptions = [['bold', 'italic', 'underline']];
 
+  const previousAnnotation = () => {
+    annotationManager.deselectAllAnnotations();
+    if (
+      selectedAnnotationIdx === null
+      || selectedAnnotationIdx - 1 === -1
+    ) {
+      const idxToSet = sortedAnnotations.length - 1;
+      setSelectedAnnotationIdx(idxToSet);
+      annotationManager.selectAnnotation(sortedAnnotations[idxToSet]);
+      return;
+    }
+    annotationManager.selectAnnotation(sortedAnnotations[selectedAnnotationIdx - 1]);
+    setSelectedAnnotationIdx(selectedAnnotationIdx - 1);
+  };
+
+  const nextAnnotation = () => {
+    annotationManager.deselectAllAnnotations();
+    if (
+      selectedAnnotationIdx === null
+      || selectedAnnotationIdx + 1 === sortedAnnotations.length
+    ) {
+      const idxToSet = 0;
+      setSelectedAnnotationIdx(idxToSet);
+      annotationManager.selectAnnotation(sortedAnnotations[idxToSet]);
+      return;
+    }
+    annotationManager.selectAnnotation(sortedAnnotations[selectedAnnotationIdx + 1]);
+    setSelectedAnnotationIdx(selectedAnnotationIdx + 1);
+  };
+
   return (
     <div className="App">
       <div id="main-column">
