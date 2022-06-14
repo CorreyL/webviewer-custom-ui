@@ -13,6 +13,31 @@ import { ReactComponent as EditContent } from './assets/icons/ic_edit_page_24px.
 import './App.css';
 import 'react-quill/dist/quill.snow.css';
 
+/**
+ * Intended to be used with the Array.sort method, assuming all elements of
+ * the Array consist of the Core.Annotations.Annotation class
+ */
+  const annotationAccessibilitySortingAlgorithm = (a, b) => {
+  if (a.PageNumber < b.PageNumber) {
+    return -1;
+  } else if (a.PageNumber > b.PageNumber) {
+    return 1;
+  }
+  // PageNumber is equal, check Y coordinates
+  if (a.Y < b.Y) {
+    return -1;
+  } else if (a.Y > b.Y) {
+    return 1;
+  }
+  // Y coordinates are equal, check X coordinates
+  if (a.X < b.X) {
+    return -1;
+  } else if (a.X > b.X) {
+    return 1;
+  }
+  return 0
+}
+
 const App = () => {
   const viewer = useRef(null);
   const scrollView = useRef(null);
