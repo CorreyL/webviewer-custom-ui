@@ -83,15 +83,6 @@ const App = () => {
       documentViewer.setToolMode(documentViewer.getTool(Core.Tools.ToolNames.EDIT));
       setAnnotationManager(documentViewer.getAnnotationManager());
       documentViewer.getAnnotationManager().promoteUserToAdmin();
-      documentViewer.getAnnotationManager()
-        .addEventListener('annotationChanged', (_, action) => {
-          if (
-            action === 'add'
-            || action === 'delete'
-          ) {
-            getAndSetSortedAnnotations();
-          }
-        });
     });
 
     documentViewer
@@ -176,8 +167,27 @@ const App = () => {
 
   const toolbarOptions = [['bold', 'italic', 'underline']];
 
+  /**
+   * @todo This is a re-definition of this method that exists inside of a
+   * useEffect above. It was non-trivial to define the method outside of the
+   * useEffect due to some React limitations, and this implementation was
+   * time-constrained, and therefore I've opted to re-define the same method
+   * outside of the useEffect for now
+   */
+  const getAndSetSortedAnnotations = () => {
+    if (!documentViewer) {
+      return;
+    }
+    setSortedAnnotations(
+      documentViewer.getAnnotationManager()
+        .getAnnotationsList()
+        .sort(annotationAccessibilitySortingAlgorithm)
+    );
+  };
+
   const previousAnnotation = () => {
     annotationManager.deselectAllAnnotations();
+    getAndSetSortedAnnotations();
     if (
       selectedAnnotationIdx === null
       || selectedAnnotationIdx - 1 === -1
@@ -193,6 +203,7 @@ const App = () => {
 
   const nextAnnotation = () => {
     annotationManager.deselectAllAnnotations();
+    getAndSetSortedAnnotations();
     if (
       selectedAnnotationIdx === null
       || selectedAnnotationIdx + 1 === sortedAnnotations.length
