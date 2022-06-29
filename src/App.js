@@ -93,8 +93,8 @@ const App = () => {
 
   useEffect(() => {
     if (annotationManager) {
-      annotationManager.removeEventListener('annotationSelected');
-      annotationManager.addEventListener('annotationSelected', (annot, action) => {
+      annotationManager.removeEventListener('annotationSelected.setSelectedAnnotation');
+      annotationManager.addEventListener('annotationSelected.setSelectedAnnotation', (annot, action) => {
         if (action === 'deselected') {
           setSelectedAnnotationIdx(null);
         }
